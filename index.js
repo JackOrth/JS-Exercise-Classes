@@ -83,13 +83,24 @@ class Airplane {
       this.odometer = 0;
     }
     fill(gallons){
-      this.tank = this.tank + gallons
+      this.tank = this.tank + gallons;
     }
     drive(distance){
-      this.odometer = this.odometer + distance;
-      //this.tank = this.tank - (distance/milesPerGallon)
-    }
-  }
+      const driveableMiles = this.tank * this.milesPerGallon;
+      if (distance <= driveableMiles){
+        this.odometer = this.odometer + distance;
+        this.tank = this.tank - (distance/this.milesPerGallon)
+      }else{
+        this.odometer = this.odometer + driveableMiles;
+        this.tank = 0 
+        return `I ran out of fuel at ${this.odometer}`
+      }
+  } 
+}
+
+
+    
+  
   
   /*
     TASK 3
@@ -165,13 +176,13 @@ class Airplane {
     this.favSubjects = favSubjects
    }
    listSubjects(){
-    `Loving ${favSubjects}`
+    return `Loving ${this.favSubjects}!`
    }
-   PRAssignment(student,subject){
-     return `${student.name} has submitted a PR for ${subject}`
+   PRAssignment(subject){
+     return `${this.name} has submitted a PR for ${subject}`
    }
-   sprintChallenge(){
-     return `student.name has begun sprint challenge on ${subject}`
+   sprintChallenge(subject){
+     return `${this.name} has begun sprint challenge on ${subject}`
    }
      
  }
@@ -190,10 +201,16 @@ class Airplane {
           + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
   */
  class ProjectManager extends Instructor {
-     constructor ({name,age,location,previousBackground,className,favSubjects,gradClassName,favInstructor}){
-       super({name,age,location,previousBackground,className,favSubjects})
+     constructor ({name,age,location,specialty,favLanguage,catchPhrase,gradClassName,favInstructor}){
+       super({name,age,location,specialty,favLanguage,catchPhrase})
        this.gradClassName = gradClassName
        this.favInstructor = favInstructor
+     }
+     standUp(channel){
+       return `${this.name} announces to ${channel}, @channel standy times!`
+     }
+     debugsCode(subjectObj, subjectStr){
+       return `${subjectObj.name} debugs ${this.name}'s code on ${subjectStr}`
      }
 
  }
